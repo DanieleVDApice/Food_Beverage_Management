@@ -7,6 +7,7 @@ public abstract class Product {
 	private String name;
 	private float quantity;
 	private float price;
+	private String batchNumber;
 	private LocalDate expiryDate;
 	private LocalDate boughtDate;
 	private boolean expired = false;
@@ -19,6 +20,17 @@ public abstract class Product {
 		this.price = price;
 		this.expiryDate = expiryDate;
 		this.boughtDate = boughtDate;
+		this.expired = expired;
+	}
+
+	public Product(String name, float quantity, float price, String batchNumber, LocalDate expiryDate,
+			boolean expired) {
+
+		this.name = name;
+		this.quantity = quantity;
+		this.price = price;
+		this.batchNumber = batchNumber;
+		this.expiryDate = expiryDate;
 		this.expired = expired;
 	}
 
@@ -44,6 +56,14 @@ public abstract class Product {
 
 	public void setPrice(float price) {
 		this.price = price;
+	}
+
+	public String getBatchNumber() {
+		return batchNumber;
+	}
+
+	public void setBatchNumber(String batchNumber) {
+		this.batchNumber = batchNumber;
 	}
 
 	public LocalDate getExpiryDate() {
