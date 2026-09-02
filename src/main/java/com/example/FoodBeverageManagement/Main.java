@@ -46,15 +46,3 @@ public void checkExpired() {
 	}
 }
 
-@Override
-public void checkExpired() {
-	LocalDate today = LocalDate.now();
-	long daysToExpiry = ChronoUnit.DAYS.between(today, getExpiringDate());
-	if (today.isAfter(getExpiringDate()) || daysToExpiry == 0) {
-		System.out.println(getName() + " has passed the expiring date: " + getExpiringDate());
-		setExpired(true);
-	} else if (daysToExpiry > 0){
-		System.out.println(getName() + " is not expired: " + daysToExpiry + " days to expiry.");
-		setExpired(false);
-	}
-}

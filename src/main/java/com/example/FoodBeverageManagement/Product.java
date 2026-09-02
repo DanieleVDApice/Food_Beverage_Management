@@ -7,29 +7,14 @@ public abstract class Product {
 	private String name;
 	private float quantity;
 	private float price;
-	private String batchNumber;
 	private LocalDate expiryDate;
-	private LocalDate boughtDate;
 	private boolean expired = false;
 
-	public Product(String name, float quantity, float price, LocalDate expiryDate, LocalDate boughtDate,
-			boolean expired) {
+	public Product(String name, float quantity, float price, LocalDate expiryDate, boolean expired) {
 
 		this.name = name;
 		this.quantity = quantity;
 		this.price = price;
-		this.expiryDate = expiryDate;
-		this.boughtDate = boughtDate;
-		this.expired = expired;
-	}
-
-	public Product(String name, float quantity, float price, String batchNumber, LocalDate expiryDate,
-			boolean expired) {
-
-		this.name = name;
-		this.quantity = quantity;
-		this.price = price;
-		this.batchNumber = batchNumber;
 		this.expiryDate = expiryDate;
 		this.expired = expired;
 	}
@@ -58,28 +43,12 @@ public abstract class Product {
 		this.price = price;
 	}
 
-	public String getBatchNumber() {
-		return batchNumber;
-	}
-
-	public void setBatchNumber(String batchNumber) {
-		this.batchNumber = batchNumber;
-	}
-
 	public LocalDate getExpiryDate() {
 		return expiryDate;
 	}
 
 	public void setExpiryDate(LocalDate expiryDate) {
 		this.expiryDate = expiryDate;
-	}
-
-	public LocalDate getBoughtDate() {
-		return boughtDate;
-	}
-
-	public void setBoughtDate(LocalDate boughtDate) {
-		this.boughtDate = boughtDate;
 	}
 
 	public boolean isExpired() {
@@ -90,6 +59,10 @@ public abstract class Product {
 		this.expired = expired;
 	}
 
+	public void checkExpired() {
+
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -98,7 +71,6 @@ public abstract class Product {
 		sb.append("Quantity").append(getQuantity()).append(", ");
 		sb.append("Price").append(getPrice()).append(";\n");
 		sb.append("Expiry date").append(getExpiryDate()).append(", ");
-		sb.append("Bought date").append(getBoughtDate()).append(", ");
 		sb.append("Expired").append(isExpired()).append(";");
 		return sb.toString();
 	}
