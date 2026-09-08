@@ -1,5 +1,5 @@
 package com.example.FoodBeverageManagement;
 
 public enum EnumFoodState {
-	FRESH, CANNED, PACKAGED, FROZEN, COOKED
+	FRESH, CANNED, PACKAGED, FROZEN
 }

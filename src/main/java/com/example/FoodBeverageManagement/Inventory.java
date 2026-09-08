@@ -1,5 +1,7 @@
 package com.example.FoodBeverageManagement;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +42,7 @@ public class Inventory {
 		if (!findProduct(product)) {
 			throw new IllegalArgumentException("Product not found in inventory: " + product.getName());
 		}
-		
+
 		if (product instanceof Beverage beverage) {
 			product.setQuantity(product.getQuantity() + quantity);
 			beverage.setQuantity(beverage.getQuantity() + quantity);
@@ -101,5 +103,49 @@ public class Inventory {
 			}
 		}
 		return false;
+	}
+
+	public Boolean checkProduct(Product product) {
+		if (product == null) {
+			throw new IllegalArgumentException("Food cannot be null");
+		}
+		LocalDate today = LocalDate.now();
+		long daysToExpiry = ChronoUnit.DAYS.between(today, product.getExpiryDate());
+
+		if (today.isAfter(product.getExpiryDate()) || daysToExpiry == 0) {
+			System.out.println(product.getName() + " has passed the expiring date: " + product.getExpiryDate());
+			return product.setExpired(true);
+		} else if (daysToExpiry > 0) {
+			System.out.println(product.getName() + " is not expired: " + daysToExpiry + " days to expiry.");
+			return product.setExpired(false);
+		}
+		return product.isExpired();
+
+	}
+
+	public void getFoods(List<Food> foods) {
+		if (foods == null) {
+			throw new IllegalArgumentException("Foods list is null.");
+		}
+		for (Food food : foods) {
+			if (checkProduct(food)) {
+				food.toString();
+			}else {
+				System.out.println(food.getName() + " is expired: " + food.getExpiryDate());
+			}
+		}
+	}
+	
+	public void getBeverages(List<Beverage> beverages) {
+		if (beverages == null) {
+			throw new IllegalArgumentException("Beverages list is null.");
+		}
+		for (Beverage beverage : beverages) {
+			if (checkProduct(beverage)) {
+				beverage.toString();
+			}else {
+				System.out.println(beverage.getName() + "is expired: " + beverage.getExpiryDate());
+			}
+		}
 	}
 }

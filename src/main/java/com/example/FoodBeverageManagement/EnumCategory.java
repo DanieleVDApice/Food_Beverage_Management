@@ -1,5 +1,5 @@
 package com.example.FoodBeverageManagement;
 
 public enum EnumCategory {
-	MEAT, FISH, DAIRY, VEGETABLES, FRUIT, GRAINS, LEGUMES, EGGS, SWEETS
+	MEAT, FISH, DAIRY, VEGETABLE, FRUIT, GRAIN, LEGUME, EGG, SWEET
 }
