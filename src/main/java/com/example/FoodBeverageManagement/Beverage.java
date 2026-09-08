@@ -36,14 +36,6 @@ public class Beverage extends Product {
 		return container;
 	}
 
-	public static Beverage createBeverage() {
-		Product product = createProduct();
-		EnumContainer container = setContainer();
-
-		return new Beverage(product.getName(), product.getQuantity(), product.getPrice(), product.getBatchNumber(),
-				product.getBoughtDate(), product.getExpiryDate(), product.isExpired(), container);
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

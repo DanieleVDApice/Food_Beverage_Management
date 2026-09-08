@@ -68,15 +68,6 @@ public class Food extends Product {
 		return foodState;
 	}
 
-	public static Food createFood() {
-		Product product = createProduct();
-		EnumCategory category = setCategory();
-		EnumFoodState foodState = setFoodState();
-
-		return new Food(product.getName(), product.getQuantity(), product.getPrice(), product.getBatchNumber(),
-				product.getBoughtDate(), product.getExpiryDate(), product.isExpired(), category, foodState);
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

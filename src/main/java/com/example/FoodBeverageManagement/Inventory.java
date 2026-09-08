@@ -1,6 +1,8 @@
 package com.example.FoodBeverageManagement;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +12,44 @@ public class Inventory {
 	private List<Beverage> beverages = new ArrayList<>();
 	private List<Food> foods = new ArrayList<>();
 
+	private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+			.withResolverStyle(ResolverStyle.STRICT);
+	
 	public static class ErrorQuantityException extends Exception {
 		public ErrorQuantityException(String message) {
 			super(message);
 		}
 	}
+	
+	public static Product createProduct() {
+		String name = Product.createName();
+		float quantity = Product.createQuantity();
+		float price = Product.createPrice();
+		String batchNumber = Product.createBatchNumber();
+		LocalDate boughtDate = Product.createBoughtDate();
+		LocalDate expiryDate = Product.createExpiryDate();
+		boolean expired = Product.createExpired();
 
+		return new Product(name, quantity, price, batchNumber, boughtDate, expiryDate, expired);
+	}
+	
+	public static Beverage createBeverage() {
+		Product product = createProduct();
+		EnumContainer container = Beverage.setContainer();
+		
+		return new Beverage(product.getName(), product.getQuantity(), product.getPrice(), product.getBatchNumber(),
+				product.getBoughtDate(), product.getExpiryDate(), product.isExpired(), container);
+	}
+	
+	public static Food createFood() {
+		Product product = createProduct();
+		EnumCategory category = Food.setCategory();
+		EnumFoodState foodState = Food.setFoodState();
+
+		return new Food(product.getName(), product.getQuantity(), product.getPrice(), product.getBatchNumber(),
+				product.getBoughtDate(), product.getExpiryDate(), product.isExpired(), category, foodState);
+	}
+	
 	public void addProduct(Product product) {
 		if (product == null) {
 			throw new IllegalArgumentException("Product cannot be null");
@@ -114,10 +148,10 @@ public class Inventory {
 
 		if (today.isAfter(product.getExpiryDate()) || daysToExpiry == 0) {
 			System.out.println(product.getName() + " has passed the expiring date: " + product.getExpiryDate());
-			return product.setExpired(true);
+			product.setExpired(true);
 		} else if (daysToExpiry > 0) {
 			System.out.println(product.getName() + " is not expired: " + daysToExpiry + " days to expiry.");
-			return product.setExpired(false);
+			product.setExpired(false);
 		}
 		return product.isExpired();
 
