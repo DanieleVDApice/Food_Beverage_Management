@@ -17,6 +17,17 @@ public class Beverage extends Product {
 		return container;
 	}
 
+	public static EnumContainer parseContainer(String input) {
+		if (input == null) {
+			throw new IllegalArgumentException("Container cannot be null");
+		}
+		try {
+			return EnumContainer.valueOf(input.trim().toUpperCase());
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException("Invalid container: " + input, e);
+		}
+	}
+
 	public static EnumContainer setContainer() {
 		Scanner scanner = new Scanner(System.in);
 		EnumContainer container = null;
@@ -25,12 +36,10 @@ public class Beverage extends Product {
 			System.out.print("Container (BOTTLE, CAN, TAP): ");
 			String inputContainer = scanner.nextLine().toUpperCase();
 
-			if (inputContainer.equals("BOTTLE") || inputContainer.equals("CAN") || inputContainer.equals("TAP")) {
-
-				container = EnumContainer.valueOf(inputContainer);
-
-			} else {
-				System.out.println("Error: insert BOTTLE, CAN or TAP.");
+			try {
+				container = parseContainer(inputContainer);
+			} catch (IllegalArgumentException e) {
+				System.out.println("Error: insert BOTTLE, CAN, TAP");
 			}
 		}
 		return container;

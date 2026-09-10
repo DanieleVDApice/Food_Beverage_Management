@@ -12,7 +12,7 @@ public class Inventory {
 	private List<Beverage> beverages = new ArrayList<>();
 	private List<Food> foods = new ArrayList<>();
 
-	private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+	private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu")
 			.withResolverStyle(ResolverStyle.STRICT);
 	
 	public static class ErrorQuantityException extends Exception {

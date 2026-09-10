@@ -1,8 +1,6 @@
 package com.example.FoodBeverageManagement;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
 
 public class Food extends Product {
@@ -22,30 +20,48 @@ public class Food extends Product {
 		return category;
 	}
 
+	public EnumFoodState getFoodState() {
+		return foodState;
+	}
+
+	
+	public static EnumCategory parseCategory(String input) {
+		if (input == null) {
+			throw new IllegalArgumentException("Category cannot be null");
+		}
+		try {
+			return EnumCategory.valueOf(input.trim().toUpperCase());
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException("Invalid category: " + input, e);
+		}
+	}
+
+	public static EnumFoodState parseFoodState(String input) {
+		if (input == null) {
+			throw new IllegalArgumentException("Food state cannot be null");
+		}
+		try {
+			return EnumFoodState.valueOf(input.trim().toUpperCase());
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException("Invalid food state: " + input, e);
+		}
+	}
+
+	
 	public static EnumCategory setCategory() {
 		Scanner scanner = new Scanner(System.in);
 		EnumCategory category = null;
 
 		while (category == null) {
 			System.out.print("Category (MEAT, FISH, DAIRY, VEGETABLE, FRUIT, GRAIN, LEGUME, EGG, SWEET): ");
-			String inputCategory = scanner.nextLine().toUpperCase();
-
-			if (inputCategory.equals("MEAT") || inputCategory.equals("FISH") || inputCategory.equals("DAIRY")
-					|| inputCategory.equals("VEGETABLE") || inputCategory.equals("FRUIT")
-					|| inputCategory.equals("GRAIN") || inputCategory.equals("LEGUME") || inputCategory.equals("EGG")
-					|| inputCategory.equals("SWEET")) {
-
-				category = EnumCategory.valueOf(inputCategory);
-
-			} else {
+			String inputCategory = scanner.nextLine();
+			try {
+				category = parseCategory(inputCategory);
+			} catch (IllegalArgumentException e) {
 				System.out.println("Error: insert MEAT, FISH, DAIRY, VEGETABLE, FRUIT, GRAIN, LEGUME, EGG or SWEET.");
 			}
 		}
 		return category;
-	}
-
-	public EnumFoodState getFoodState() {
-		return foodState;
 	}
 
 	public static EnumFoodState setFoodState() {
@@ -54,20 +70,17 @@ public class Food extends Product {
 
 		while (foodState == null) {
 			System.out.print("Food state (FRESH, CANNED, PACKAGED, FROZEN): ");
-			String inputState = scanner.nextLine().toUpperCase();
-
-			if (inputState.equals("FRESH") || inputState.equals("CANNED") || inputState.equals("PACKAGED")
-					|| inputState.equals("FROZEN")) {
-
-				foodState = EnumFoodState.valueOf(inputState);
-
-			} else {
+			String inputState = scanner.nextLine();
+			try {
+				foodState = parseFoodState(inputState);
+			} catch (IllegalArgumentException e) {
 				System.out.println("Error: insert FRESH, CANNED, PACKAGED or FROZEN.");
 			}
 		}
 		return foodState;
 	}
 
+	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
