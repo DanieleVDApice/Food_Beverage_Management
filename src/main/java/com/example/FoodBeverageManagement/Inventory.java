@@ -6,6 +6,7 @@ import java.time.format.ResolverStyle;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Inventory {
 	private List<Product> products = new ArrayList<>();
@@ -14,7 +15,7 @@ public class Inventory {
 
 	private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu")
 			.withResolverStyle(ResolverStyle.STRICT);
-	
+
 	public static class ErrorQuantityException extends Exception {
 		public ErrorQuantityException(String message) {
 			super(message);
@@ -32,15 +33,15 @@ public class Inventory {
 
 		return new Product(name, quantity, price, batchNumber, boughtDate, expiryDate, expired);
 	}
-	
+
 	public static Beverage createBeverage() {
 		Product product = createProduct();
 		EnumContainer container = Beverage.setContainer();
-		
+
 		return new Beverage(product.getName(), product.getQuantity(), product.getPrice(), product.getBatchNumber(),
 				product.getBoughtDate(), product.getExpiryDate(), product.isExpired(), container);
 	}
-	
+
 	public static Food createFood() {
 		Product product = createProduct();
 		EnumCategory category = Food.setCategory();
@@ -49,7 +50,7 @@ public class Inventory {
 		return new Food(product.getName(), product.getQuantity(), product.getPrice(), product.getBatchNumber(),
 				product.getBoughtDate(), product.getExpiryDate(), product.isExpired(), category, foodState);
 	}
-	
+
 	public void addProduct(Product product) {
 		if (product == null) {
 			throw new IllegalArgumentException("Product cannot be null");
@@ -66,7 +67,7 @@ public class Inventory {
 		}
 	}
 
-	public void increaseProduct(int quantity, Product product) throws ErrorQuantityException {
+	public void increaseProduct(int quantity, Product product){
 		if (product == null) {
 			throw new IllegalArgumentException("Product cannot be null");
 		}
@@ -76,14 +77,7 @@ public class Inventory {
 		if (!findProduct(product)) {
 			throw new IllegalArgumentException("Product not found in inventory: " + product.getName());
 		}
-
-		if (product instanceof Beverage beverage) {
-			product.setQuantity(product.getQuantity() + quantity);
-			beverage.setQuantity(beverage.getQuantity() + quantity);
-		} else if (product instanceof Food food) {
-			product.setQuantity(product.getQuantity() + quantity);
-			food.setQuantity(food.getQuantity() + quantity);
-		}
+		product.setQuantity(product.getQuantity() + quantity);
 	}
 
 	public void removeProduct(Product product) {
@@ -162,22 +156,24 @@ public class Inventory {
 			throw new IllegalArgumentException("Foods list is null.");
 		}
 		for (Food food : foods) {
-			if (checkProduct(food)) {
-				food.toString();
-			}else {
+			if (!(checkProduct(food))) {
+				System.out.println(food.toString());
+				
+			} else {
 				System.out.println(food.getName() + " is expired: " + food.getExpiryDate());
 			}
 		}
 	}
-	
+
 	public void getBeverages(List<Beverage> beverages) {
 		if (beverages == null) {
 			throw new IllegalArgumentException("Beverages list is null.");
 		}
 		for (Beverage beverage : beverages) {
-			if (checkProduct(beverage)) {
-				beverage.toString();
-			}else {
+			if (!(checkProduct(beverage))) {
+				System.out.println(beverage.toString());
+				
+			} else {
 				System.out.println(beverage.getName() + "is expired: " + beverage.getExpiryDate());
 			}
 		}

@@ -18,7 +18,7 @@ class FoodTest {
     @BeforeEach
     void setUp() {
         food = new Food(
-            "Salmone",
+            "Salmon",
             2.0f,
             15.0f,
             "BATCH010",
@@ -31,27 +31,27 @@ class FoodTest {
     }
 
     // =========================================================================
-    // COSTRUTTORE (verifico anche i campi ereditati da Product)
+    // CONSTRUCTOR (also verifies fields inherited from Product)
     // =========================================================================
 
     @Nested
-    @DisplayName("Costruttore")
-    class CostruttoreTest {
+    @DisplayName("Constructor")
+    class ConstructorTest {
 
         @Test
-        void salvaLaCategoria() {
+        void storesTheCategory() {
             assertEquals(EnumCategory.FISH, food.getCategory());
         }
 
         @Test
-        void salvaLoStatoDelCibo() {
+        void storesTheFoodState() {
             assertEquals(EnumFoodState.FRESH, food.getFoodState());
         }
 
         @Test
-        @DisplayName("Salva correttamente anche i campi ereditati da Product")
-        void salvaICampiEreditati() {
-            assertEquals("Salmone", food.getName());
+        @DisplayName("Also correctly stores the fields inherited from Product")
+        void storesTheInheritedFields() {
+            assertEquals("Salmon", food.getName());
             assertEquals(2.0f, food.getQuantity());
             assertEquals(15.0f, food.getPrice());
             assertEquals("BATCH010", food.getBatchNumber());
@@ -70,36 +70,36 @@ class FoodTest {
         @ValueSource(strings = {
             "MEAT", "FISH", "DAIRY", "VEGETABLE", "FRUIT", "GRAIN", "LEGUME", "EGG", "SWEET"
         })
-        @DisplayName("Accetta tutti i valori validi dell'enum")
-        void accettaValoriValidi(String valore) {
-            assertEquals(EnumCategory.valueOf(valore), Food.parseCategory(valore));
+        @DisplayName("Accepts all valid enum values")
+        void acceptsValidValues(String value) {
+            assertEquals(EnumCategory.valueOf(value), Food.parseCategory(value));
         }
 
         @Test
-        @DisplayName("È case-insensitive")
-        void eCaseInsensitive() {
+        @DisplayName("Is case-insensitive")
+        void isCaseInsensitive() {
             assertEquals(EnumCategory.MEAT, Food.parseCategory("meat"));
             assertEquals(EnumCategory.MEAT, Food.parseCategory("MeAt"));
         }
 
         @Test
-        @DisplayName("Ignora spazi bianchi ai lati")
-        void ignoraSpaziAiLati() {
+        @DisplayName("Ignores leading and trailing whitespace")
+        void ignoresLeadingAndTrailingWhitespace() {
             assertEquals(EnumCategory.FRUIT, Food.parseCategory("  fruit  "));
         }
 
         @Test
-        void lanciaEccezioneConValoreNonValido() {
+        void throwsExceptionForInvalidValue() {
             assertThrows(IllegalArgumentException.class, () -> Food.parseCategory("PIZZA"));
         }
 
         @Test
-        void lanciaEccezioneConStringaVuota() {
+        void throwsExceptionForEmptyString() {
             assertThrows(IllegalArgumentException.class, () -> Food.parseCategory(""));
         }
 
         @Test
-        void lanciaEccezioneConNull() {
+        void throwsExceptionForNull() {
             assertThrows(IllegalArgumentException.class, () -> Food.parseCategory(null));
         }
     }
@@ -114,35 +114,35 @@ class FoodTest {
 
         @ParameterizedTest
         @ValueSource(strings = {"FRESH", "CANNED", "PACKAGED", "FROZEN"})
-        @DisplayName("Accetta tutti i valori validi dell'enum")
-        void accettaValoriValidi(String valore) {
-            assertEquals(EnumFoodState.valueOf(valore), Food.parseFoodState(valore));
+        @DisplayName("Accepts all valid enum values")
+        void acceptsValidValues(String value) {
+            assertEquals(EnumFoodState.valueOf(value), Food.parseFoodState(value));
         }
 
         @Test
-        @DisplayName("È case-insensitive")
-        void eCaseInsensitive() {
+        @DisplayName("Is case-insensitive")
+        void isCaseInsensitive() {
             assertEquals(EnumFoodState.FROZEN, Food.parseFoodState("frozen"));
         }
 
         @Test
-        @DisplayName("Ignora spazi bianchi ai lati")
-        void ignoraSpaziAiLati() {
+        @DisplayName("Ignores leading and trailing whitespace")
+        void ignoresLeadingAndTrailingWhitespace() {
             assertEquals(EnumFoodState.CANNED, Food.parseFoodState("  canned  "));
         }
 
         @Test
-        void lanciaEccezioneConValoreNonValido() {
+        void throwsExceptionForInvalidValue() {
             assertThrows(IllegalArgumentException.class, () -> Food.parseFoodState("ROTTEN"));
         }
 
         @Test
-        void lanciaEccezioneConStringaVuota() {
+        void throwsExceptionForEmptyString() {
             assertThrows(IllegalArgumentException.class, () -> Food.parseFoodState(""));
         }
 
         @Test
-        void lanciaEccezioneConNull() {
+        void throwsExceptionForNull() {
             assertThrows(IllegalArgumentException.class, () -> Food.parseFoodState(null));
         }
     }
@@ -156,19 +156,19 @@ class FoodTest {
     class ToStringTest {
 
         @Test
-        void contieneLaCategoria() {
+        void containsTheCategory() {
             assertTrue(food.toString().contains("FISH"));
         }
 
         @Test
-        void contieneLoStatoDelCibo() {
+        void containsTheFoodState() {
             assertTrue(food.toString().contains("FRESH"));
         }
 
         @Test
-        @DisplayName("Contiene anche le informazioni ereditate da Product (nome)")
-        void contieneInfoEreditate() {
-            assertTrue(food.toString().contains("Salmone"));
+        @DisplayName("Also contains information inherited from Product (name)")
+        void containsInheritedInfo() {
+            assertTrue(food.toString().contains("Salmon"));
         }
     }
 }

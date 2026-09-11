@@ -193,7 +193,7 @@ public class Product {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Product: ").append(getClass()).append("\n");
+		sb.append("Product: ").append(getClass().getSimpleName()).append("\n");
 		sb.append("Name: ").append(getName()).append(", ");
 		sb.append("Quantity: ").append(getQuantity()).append(", ");
 		sb.append("Price: ").append(getPrice()).append(",\n");
